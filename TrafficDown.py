@@ -8,9 +8,7 @@
 
 import importlib.util
 import os
-import requests
 import importlib
-import threading
 
 
 _os = "windows" if os.name == "nt" else "linux"
@@ -25,6 +23,8 @@ for package in packages:
 
         os.system(f"python -m pip install {package}")
 
+import requests  # noqa: E402 # type: ignore
+import threading  # noqa: E402 # type: ignore
 
 eat = False
 
@@ -48,7 +48,7 @@ def downloadThread(url):
                     break
                 # print(len(chunk))
                 readed += len(chunk)
-                text = f"Кушаем...\nПрочитано {round(readed/1024/1024,1)} МБ"
+                text = f"Кушаем...\nПрочитано {round(readed/1024/1024, 1)} МБ"
                 print(text)
 
                 if useTkinter:
@@ -126,12 +126,14 @@ else:
 
 if useTkinter and _os == "linux":
     from tk import window, startbtn, statuslbl
+
     startbtn.configure(command=startSpamTkinter)
     window.mainloop()
 
 elif useTkinter and _os == "windows":
 
     from custom_tk import window, startbtn, statuslbl
+
     startbtn.configure(command=startSpamTkinter)
     window.mainloop()
 

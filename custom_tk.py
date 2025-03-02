@@ -1,11 +1,11 @@
 import os
-from customtkinter import (
-        CTk,
-        CTkFrame,
-        CTkLabel,
-        CTkButton,
-        set_appearance_mode,
-    )
+from customtkinter import (  # type: ignore
+    CTk,
+    CTkFrame,
+    CTkLabel,
+    CTkButton,
+    set_appearance_mode,
+)
 
 from config import fg, hover, bg
 
