@@ -11,6 +11,19 @@ import os
 import importlib
 
 
+def no_gui():
+    while True:
+        for function in functions:
+
+            print(f'{function["name"]} - {function["description"]}')
+
+        choice = input("Введите название функции:\t")
+
+        for function in functions:
+            if function["name"] == choice.lower().strip():
+                function["handler"]()
+
+
 _os = "windows" if os.name == "nt" else "linux"
 packages = ["requests", "tkinter", "threading", "customtkinter"]
 for package in packages:
@@ -62,21 +75,20 @@ def downloadThread(url):
 
 
 def trafficDown():
+    global eat
+    if not useTkinter:
+        print("Нажмите ENTER для остановки")
+        input()
+        eat = False
+        return
 
-    global eat, statuslbl, readed
+    global statuslbl, readed
 
     eat = True
     readed = 0
 
-    print("Нажмите ENTER для остановки")
-
     for url in urls:
-
         threading.Thread(target=downloadThread, args=(url,)).start()
-
-    if not useTkinter:
-        input()
-        eat = False
 
 
 functions = [
@@ -124,28 +136,23 @@ if importlib.util.find_spec("tkinter"):
 else:
     useTkinter = False
 
-if useTkinter and _os == "linux":
-    from tk import window, startbtn, statuslbl
+try:
+    if useTkinter and _os == "linux":
+        from tk import window, startbtn, statuslbl
 
-    startbtn.configure(command=startSpamTkinter)
-    window.mainloop()
+        startbtn.configure(command=startSpamTkinter)
+        window.mainloop()
+    elif useTkinter and _os == "windows":
+        from custom_tk import window, startbtn, statuslbl
 
-elif useTkinter and _os == "windows":
-
-    from custom_tk import window, startbtn, statuslbl
-
-    startbtn.configure(command=startSpamTkinter)
-    window.mainloop()
-
-else:
-    print("Не удалось загрузить GUI. Используем терминальную версию.")
-    while True:
-        for function in functions:
-
-            print(f'{function["name"]} - {function["description"]}')
-
-        choice = input("Введите название функции:\t")
-
-        for function in functions:
-            if function["name"] == choice.lower().strip():
-                function["handler"]()
+        startbtn.configure(command=startSpamTkinter)
+        window.mainloop()
+    else:
+        print("Не удалось загрузить GUI. Используем терминальную версию.")
+        no_gui()
+except Exception as e:
+    print(
+        "Не удалось загрузить GUI. Используем терминальную версию.\nПричина:",
+        e,
+    )
+    no_gui()
