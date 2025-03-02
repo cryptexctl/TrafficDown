@@ -51,7 +51,7 @@ urls = [
 
 def downloadThread(url):
 
-    global eat, statuslbl, readed
+    global eat, readed
     while eat:
         try:
             r = requests.get(url, stream=True, timeout=3)
@@ -82,7 +82,7 @@ def trafficDown():
         eat = False
         return
 
-    global statuslbl, readed
+    global readed
 
     eat = True
     readed = 0
@@ -151,6 +151,7 @@ try:
         print("Не удалось загрузить GUI. Используем терминальную версию.")
         no_gui()
 except Exception as e:
+    useTkinter = False
     print(
         "Не удалось загрузить GUI. Используем терминальную версию.\nПричина:",
         e,
