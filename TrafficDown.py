@@ -75,20 +75,19 @@ def downloadThread(url):
 
 
 def trafficDown():
-    global eat
+    global eat, readed
+
+    readed = 0
+    eat = True
+
+    for url in urls:
+        print(f"Скачивание {url}")
+        threading.Thread(target=downloadThread, args=(url,)).start()
+
     if not useTkinter:
         print("Нажмите ENTER для остановки")
         input()
         eat = False
-        return
-
-    global readed
-
-    eat = True
-    readed = 0
-
-    for url in urls:
-        threading.Thread(target=downloadThread, args=(url,)).start()
 
 
 functions = [
