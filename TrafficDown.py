@@ -18,7 +18,7 @@ for package in packages:
     installed = importlib.util.find_spec(package)
     if not installed:
       os.system(f"python -m pip install {package}")
-      importlib.util.find_spec(package)
+    if package != 'customtkinter': exec(f'import {package}')
 
 if int(sys.version.split(' ')[0].split('.')[1])<13: 
   input('Для запуска скрипта обновите Python до версии 3.13 и выше!')
