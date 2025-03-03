@@ -86,6 +86,7 @@ def sendpackets():
  global killwifi
  while killwifi:
   try:
+    print(psutil.virtual_memory().free)
     if psutil.virtual_memory().free//1024//1024<50: threading.Thread(target=makepacket).start()
     else: 
       print(f'{colorama.Fore.RED}Мало свободного ОЗУ! (<50мб), ожидаем 5 секунд, если ошибка не пропадет, перезагрузите скрипт или устройство')
