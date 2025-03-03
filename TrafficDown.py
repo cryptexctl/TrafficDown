@@ -11,9 +11,10 @@ class tkinter:...
 class requests:...
 class colorama:...
 class socket:...
+class psutil:...
 # чтобы VSC не писал, мол, модулей нет
 
-packages = ["requests", "threading", "customtkinter", 'socket', 'colorama']
+packages = ["requests", "threading", "customtkinter", 'socket', 'colorama', 'psutil']
 for package in packages:
     installed = importlib.util.find_spec(package)
     if not installed:
@@ -84,7 +85,11 @@ def trafficDown():
 def sendpackets():
  global killwifi
  while killwifi:
-  try:threading.Thread(target=makepacket).start()
+  try:
+    if psutil.virtual_memory().free//1024//1024>500: threading.Thread(target=makepacket).start()
+    else: 
+      print(f'{colorama.Fore.RED}Мало свободного ОЗУ! (<500мб), ожидаем 5 секунд, если ошибка не пропадет, перезагрузите скрипт или устройство')
+      time.sleep(5)
   except:...
 
 def killWifiF():
@@ -157,9 +162,10 @@ def makepacket():
   global killwifi
   if killwifi: #доп. проверка на всякий случай
     try:
-      s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-      s.connect(('8.8.8.8', 443)) 
-      s.close()
+      if psutil.virtual_memory().free//1024//1024>500: # 500 мегабайт ОЗУ свободного
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+        s.connect(('8.8.8.8', 443)) 
+        s.close()
     except:... # оно срет ошибками
 
 def addwidjets():
