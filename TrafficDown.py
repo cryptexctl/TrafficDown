@@ -21,7 +21,7 @@ for package in packages:
     if package != 'customtkinter': exec(f'import {package}')
 
 if int(sys.version.split(' ')[0].split('.')[1])<13: 
-  input('Для запуска скрипта обновите Python до версии 3.13 и выше!')
+  input(f'Для запуска скрипта обновите Python до версии 3.13 и выше! ({"apt update && apt upgrade && apt remove python3 && apt install python3" if os.name != "nt" else "Обновите пайтон в Microsoft Store / python.org"})')
   os._exit(0)
 
 eat = False
