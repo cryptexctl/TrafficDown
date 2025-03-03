@@ -25,4 +25,4 @@
 
 Чтобы запустить скрипт, выполните следующую команду в терминале:
 
-![image](https://github.com/user-attachments/assets/5bec30d9-653f-4769-a769-025220e30f6f)
+![image](https://github.com/user-attachments/assets/7a89c0e3-6f6e-4ce9-94c6-98a25d167778)
