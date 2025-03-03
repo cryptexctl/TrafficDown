@@ -166,6 +166,7 @@ def makepacket():
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
         s.connect(('8.8.8.8', 443)) 
         s.close()
+        del s
     except:... # оно срет ошибками
 
 def addwidjets():
