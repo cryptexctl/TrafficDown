@@ -20,8 +20,8 @@ for package in packages:
       os.system(f"python -m pip install {package}")
     if package != 'customtkinter': exec(f'import {package}')
 
-if int(sys.version.split(' ')[0].split('.')[1])<13: 
-  input(f'Для запуска скрипта обновите Python до версии 3.13 и выше! ({"apt update && apt upgrade && apt remove python3 && apt install python3" if os.name != "nt" else "Обновите пайтон в Microsoft Store / python.org"})')
+if int(sys.version.split(' ')[0].split('.')[1])<12: 
+  input(f'Для запуска скрипта обновите Python до версии 3.12 и выше! ({"apt update && apt upgrade && apt remove python3 && apt install python3" if os.name != "nt" else "Обновите пайтон в Microsoft Store / python.org"})')
   os._exit(0)
 
 eat = False
