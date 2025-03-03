@@ -23,6 +23,15 @@
 
 ## Запуск
 
-Чтобы запустить скрипт, выполните следующую команду в терминале:
+Как использовать на Android:
+Скачайте Termux, введите команду 
+Apt update && apt upgrade -y && apt install python3 && apt install git && git clone https://github.com/Sonys9/TrafficDown && cd TrafficDown && python3 TrafficDown.py
 
+Как пользоваться на Windows:
+Скачайте Python 3.8 и выше с Microsoft Store (там легче всего, либо через python.org) и запустите скрипт
+
+Как пользоваться на Linux дистрибутивах:
+Впишите в терминале команду Apt update && apt upgrade -y && apt install python3 && apt install git && git clone https://github.com/Sonys9/TrafficDown && cd TrafficDown && python3 TrafficDown.py
+
+💻 HackActivity (https://t.me/HackActivity)
 ![image](https://github.com/user-attachments/assets/7a89c0e3-6f6e-4ce9-94c6-98a25d167778)
