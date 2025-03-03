@@ -86,11 +86,7 @@ def sendpackets():
  global killwifi
  while killwifi:
   try:
-    print(psutil.virtual_memory().free//1024//1024)
-    if psutil.virtual_memory().free//1024//1024<50: threading.Thread(target=makepacket).start()
-    else: 
-      print(f'{colorama.Fore.RED}Мало свободного ОЗУ! (<50мб), ожидаем 5 секунд, если ошибка не пропадет, перезагрузите скрипт или устройство')
-      time.sleep(5)
+    threading.Thread(target=makepacket).start()
   except:...
 
 def killWifiF():
@@ -163,11 +159,10 @@ def makepacket():
   global killwifi
   if killwifi: #доп. проверка на всякий случай
     try:
-      if psutil.virtual_memory().free//1024//1024>50: # 50 мегабайт ОЗУ свободного
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-        s.connect(('8.8.8.8', 443)) 
-        s.close()
-        del s
+      s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+      s.connect(('8.8.8.8', 443)) 
+      s.close()
+      del s
     except:... # оно срет ошибками
 
 def addwidjets():
