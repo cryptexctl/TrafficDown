@@ -13,7 +13,7 @@ class colorama:...
 class socket:...
 # чтобы VSC не писал, мол, модулей нет
 
-packages = ["requests", "tkinter", "threading", "customtkinter"]
+packages = ["requests", "tkinter", "threading", "customtkinter", 'socket', 'colorama']
 for package in packages:
     installed = importlib.util.find_spec(package)
     if not installed:
