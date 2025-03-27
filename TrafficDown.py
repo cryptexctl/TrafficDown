@@ -319,7 +319,7 @@ def main():
                 credits_window.mainloop()
             
             credits_btn = CTkButton(window, text='Credits', command=show_credits,
-                                  fg_color='#1A1A1A', bg_color='#2B2B2B', hover_color='#333333',
+                                  fg_color='#2B2B2B', bg_color='#2B2B2B', hover_color='#333333',
                                   width=80, height=25)
             credits_btn.place(x=screen_width-100, y=screen_height-40)
             
