@@ -18,10 +18,10 @@ SPEED_TEST_SERVERS = {
         'urls': [
             'https://speedtest.selectel.ru/10GB',
             'https://speedtest.selectel.ru/1GB',
-            'https://speedtest.selectel.ru/100MB',
+#            'https://speedtest.selectel.ru/100MB',
             'http://speedtest.selectel.ru/10GB',
             'http://speedtest.selectel.ru/1GB',
-            'http://speedtest.selectel.ru/100MB'
+#            'http://speedtest.selectel.ru/100MB'
         ]
     },
     'rastrnet': {
@@ -30,19 +30,19 @@ SPEED_TEST_SERVERS = {
         'urls': [
             'https://speedtest.rastrnet.ru/1GB.zip',
             'https://speedtest.rastrnet.ru/500MB.zip',
-            'https://speedtest.rastrnet.ru/100MB.zip',
+#            'https://speedtest.rastrnet.ru/100MB.zip',
             'http://speedtest.rastrnet.ru/1GB.zip',
             'http://speedtest.rastrnet.ru/500MB.zip',
-            'http://speedtest.rastrnet.ru/100MB.zip'
+#            'http://speedtest.rastrnet.ru/100MB.zip'
         ]
     },
     'yandex': {
         'name': 'Yandex',
         'description': 'Быстрые сервера от Яндекс',
         'urls': [
-            'https://yandex.ru/internet/download/10mb.zip',
+#            'https://yandex.ru/internet/download/10mb.zip',
             'https://yandex.ru/internet/download/100mb.zip',
-            'http://yandex.ru/internet/download/10mb.zip',
+ #           'http://yandex.ru/internet/download/10mb.zip',
             'http://yandex.ru/internet/download/100mb.zip'
         ]
     },
@@ -50,9 +50,9 @@ SPEED_TEST_SERVERS = {
         'name': 'Google',
         'description': 'Тестовые файлы от Google',
         'urls': [
-            'https://speed.cloudflare.com/10mb.bin',
+#            'https://speed.cloudflare.com/10mb.bin',
             'https://speed.cloudflare.com/100mb.bin',
-            'http://speed.cloudflare.com/10mb.bin',
+#            'http://speed.cloudflare.com/10mb.bin',
             'http://speed.cloudflare.com/100mb.bin'
         ]
     }
