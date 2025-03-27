@@ -284,7 +284,7 @@ def main():
         set_appearance_mode("dark")
         window.protocol("WM_DELETE_WINDOW", lambda: os._exit(0))
         window.title('TrafficDown | by Sonys9')
-        window.geometry('400x250')
+        window.geometry('400x300')
         
         def add_widgets():
             global startbtn, statuslbl, killwifibtn
@@ -298,13 +298,13 @@ def main():
             stresser.statuslbl = statuslbl
             
             CTkLabel(window, text='Github @Sonys9 | tt @взломщик | tg @freedomleaker2', 
-                    font=('Arial Black', 8), bg_color='#2B2B2B').place(x=screen_width//2-120, y=screen_height-40)
+                    font=('Arial Black', 8), bg_color='#2B2B2B').place(relx=0.5, anchor='center', rely=0.85)
             
             CTkLabel(window, text='Многопоточность: gh @cryptexctl | tg @systemxpore', 
-                    font=('Arial Black', 8), bg_color='#2B2B2B').place(x=screen_width//2-120, y=screen_height-30)
+                    font=('Arial Black', 8), bg_color='#2B2B2B').place(relx=0.5, anchor='center', rely=0.90)
             
             CTkLabel(window, text='Server system rework: gh @cryptexctl | tg @systemxpore', 
-                    font=('Arial Black', 8), bg_color='#2B2B2B').place(x=screen_width//2-120, y=screen_height-20)
+                    font=('Arial Black', 8), bg_color='#2B2B2B').place(relx=0.5, anchor='center', rely=0.95)
             
             startbtn = CTkButton(window, text='Есть трафик', command=start_eat_ctkinter, 
                                fg_color='#008E63', bg_color='#2B2B2B', hover_color='#225244')
