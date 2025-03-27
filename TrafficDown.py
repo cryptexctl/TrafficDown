@@ -284,7 +284,7 @@ def main():
         set_appearance_mode("dark")
         window.protocol("WM_DELETE_WINDOW", lambda: os._exit(0))
         window.title('TrafficDown | by Sonys9')
-        window.geometry('400x200')
+        window.geometry('400x250')
         
         def add_widgets():
             global startbtn, statuslbl, killwifibtn
