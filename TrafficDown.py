@@ -28,7 +28,7 @@ for package in packages:
 
 try:
     import customtkinter
-    from customtkinter import CTk, CTkEntry, CTkButton, CTkLabel, CTkFrame, set_appearance_mode
+    from customtkinter import CTk, CTkEntry, CTkButton, CTkLabel, CTkFrame, set_appearance_mode, CTkTextbox
     use_gui = True
 except ImportError:
     use_gui = False
@@ -318,10 +318,37 @@ def main():
                 
                 credits_window.mainloop()
             
+            def show_changelog():
+                try:
+                    with open('changelog/changelog.txt', 'r', encoding='utf-8') as f:
+                        changelog_text = f.read()
+                except Exception as e:
+                    changelog_text = f"Ошибка чтения changelog: {e}"
+                
+                changelog_window = CTk()
+                changelog_window.title('Changelog')
+                changelog_window.geometry('400x500')
+                changelog_window.resizable(False, False)
+                
+                CTkLabel(changelog_window, text='TrafficDown Changelog', 
+                        font=('Arial Black', 16), bg_color='#2B2B2B').pack(pady=10)
+                
+                text_widget = CTkTextbox(changelog_window, width=380, height=400, bg_color='#2B2B2B')
+                text_widget.pack(pady=10)
+                text_widget.insert('1.0', changelog_text)
+                text_widget.configure(state='disabled')
+                
+                changelog_window.mainloop()
+            
             credits_btn = CTkButton(window, text='Credits', command=show_credits,
                                   fg_color='#2B2B2B', bg_color='#2B2B2B', hover_color='#333333',
                                   width=80, height=25)
             credits_btn.place(x=screen_width-100, y=screen_height-40)
+            
+            changelog_btn = CTkButton(window, text='Changelog', command=show_changelog,
+                                    fg_color='#2B2B2B', bg_color='#2B2B2B', hover_color='#333333',
+                                    width=80, height=25)
+            changelog_btn.place(x=screen_width-190, y=screen_height-40)
             
             startbtn = CTkButton(window, text='Есть трафик', command=start_eat_ctkinter, 
                                fg_color='#008E63', bg_color='#2B2B2B', hover_color='#225244')
