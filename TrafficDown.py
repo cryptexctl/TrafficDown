@@ -236,37 +236,37 @@ class NetworkStresser:
             print(f"{Fore.RED}[-] Ошибка при тестировании скорости серверов: {e}{Fore.WHITE}")
     
     def download_thread(self, url):
+        """Поток для скачивания файла"""
         try:
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                'Accept': '*/*',
+                'Accept-Encoding': 'gzip, deflate',
+                'Connection': 'keep-alive'
+            }
+            
+            response = requests.get(url, headers=headers, stream=True, verify=False)
+            chunk_size = 1024 * 1024  # 1MB chunks
+            
             while self.eat:
-                try:
-                    headers = {
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                        'Accept': '*/*',
-                        'Accept-Encoding': 'gzip, deflate',
-                        'Connection': 'keep-alive',
-                        'Range': f'bytes=0-{random.randint(1000000, 10000000)}'  # Случайный диапазон для параллельной загрузки
-                    }
+                for chunk in response.iter_content(chunk_size=chunk_size):
+                    if not self.eat:
+                        break
+                    self.readed += len(chunk)
+                    self.active_downloads += 1
                     
-                    r = requests.get(url, stream=True, timeout=5, headers=headers, verify=False)
-                    chunk_size = random.randint(1024*1024, 5*1024*1024)  # Случайный размер чанка
-                    
-                    for chunk in r.iter_content(chunk_size=chunk_size):
-                        if not self.eat:
-                            break
-                        with self.lock:
-                            self.readed += len(chunk)
-                            text = f'Прочитано {round(self.readed/1024/1024,1)} МБ | Активных потоков: {self.active_downloads}'
-                            print(f'{" "*(x//2-len(text)//2)}{text}')
-                            if use_gui:
-                                self.statuslbl.configure(text=text)
-                                
-                except requests.exceptions.RequestException:
-                    time.sleep(0.5)
-                    continue
-                    
+                    # Обновляем прогресс каждые 100MB
+                    if self.readed % (100 * 1024 * 1024) == 0:
+                        text = f'Скачано: {self.readed / (1024 * 1024 * 1024):.2f} GB'
+                        print(f'\r{text}', end='', flush=True)
+                        
+                # Если файл закончился, начинаем новый запрос
+                response = requests.get(url, headers=headers, stream=True, verify=False)
+                
+        except Exception as e:
+            print(f"\n{Fore.RED}[-] Ошибка в потоке: {e}{Fore.WHITE}")
         finally:
-            with self.lock:
-                self.active_downloads -= 1
+            self.active_downloads -= 1
     
     def kill_wifi(self):
         print(f"{Fore.YELLOW}[*] Запускаем сканирование сети...{Fore.WHITE}")
