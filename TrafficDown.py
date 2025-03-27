@@ -196,28 +196,20 @@ class NetworkStresser:
         print(f"{Fore.YELLOW}[*] Тестируем скорость серверов...{Fore.WHITE}")
         try:
             self.urls = get_sorted_urls()
-            print(f"{Fore.CYAN}[DEBUG] Получено {len(self.urls)} URL-ов{Fore.WHITE}")
             if not self.urls:
                 print(f"{Fore.RED}[-] Нет доступных серверов!{Fore.WHITE}")
-                print(f"{Fore.YELLOW}[DEBUG] Проверьте ваше интернет-соединение{Fore.WHITE}")
                 return
                 
             print(f"{Fore.GREEN}[+] Найдено {len(self.urls)} рабочих серверов{Fore.WHITE}")
-            print(f"{Fore.CYAN}[DEBUG] Первые 3 сервера:{Fore.WHITE}")
-            for i, url in enumerate(self.urls[:3], 1):
-                print(f"{Fore.CYAN}[DEBUG] {i}. {url}{Fore.WHITE}")
-                
             self.eat = True
             self.readed = 0
             self.active_downloads = 0
-            text = 'Нажмите ENTER для остановки'
             
             def manage_downloads():
                 while self.eat:
                     with self.lock:
                         if self.active_downloads < self.max_threads:
                             needed = self.max_threads - self.active_downloads
-                            # сначала самые быстрые серваки
                             available_urls = self.urls[:needed]
                             if available_urls:
                                 for url in available_urls:
@@ -225,18 +217,16 @@ class NetworkStresser:
                                     self.active_downloads += 1
                     time.sleep(1)
             
-            # Запускаем менеджер загрузок
             threading.Thread(target=manage_downloads, daemon=True).start()
             
             if not use_gui:
-                print(f'{" "*(x//2-len(text)//2)}{text}')
-                input()
+                input(f"\n{Fore.YELLOW}Нажмите ENTER для остановки{Fore.WHITE}")
                 self.eat = False
+                
         except Exception as e:
             print(f"{Fore.RED}[-] Ошибка при тестировании скорости серверов: {e}{Fore.WHITE}")
     
     def download_thread(self, url):
-        """Поток для скачивания файла"""
         try:
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -247,20 +237,23 @@ class NetworkStresser:
             
             response = requests.get(url, headers=headers, stream=True, verify=False)
             chunk_size = 1024 * 1024  # 1MB chunks
+            last_update = time.time()
             
             while self.eat:
                 for chunk in response.iter_content(chunk_size=chunk_size):
                     if not self.eat:
                         break
                     self.readed += len(chunk)
-                    self.active_downloads += 1
                     
-                    # Обновляем прогресс каждые 100MB
-                    if self.readed % (100 * 1024 * 1024) == 0:
-                        text = f'Скачано: {self.readed / (1024 * 1024 * 1024):.2f} GB'
-                        print(f'\r{text}', end='', flush=True)
+                    current_time = time.time()
+                    if current_time - last_update >= 1:
+                        speed = self.readed / (current_time - last_update) / (1024 * 1024)  # MB/s
+                        text = f'Скачано: {self.readed / (1024 * 1024 * 1024):.2f} GB | Скорость: {speed:.2f} MB/s | Потоков: {self.active_downloads}'
+                        print(f'\r{Fore.GREEN}{text}{Fore.WHITE}', end='', flush=True)
+                        if use_gui:
+                            self.statuslbl.configure(text=text)
+                        last_update = current_time
                         
-                # Если файл закончился, начинаем новый запрос
                 response = requests.get(url, headers=headers, stream=True, verify=False)
                 
         except Exception as e:
@@ -291,7 +284,7 @@ def main():
         set_appearance_mode("dark")
         window.protocol("WM_DELETE_WINDOW", lambda: os._exit(0))
         window.title('TrafficDown | by Sonys9')
-        window.geometry('300x170')
+        window.geometry('400x200')
         
         def add_widgets():
             global startbtn, statuslbl, killwifibtn
@@ -300,8 +293,9 @@ def main():
             
             CTkFrame(window, width=screen_width-20, height=screen_height-20).place(x=10, y=10)
             
-            stresser.statuslbl = CTkLabel(window, text='Тут будет статус', font=('Arial Black', 13), bg_color='#2B2B2B')
-            stresser.statuslbl.place(relx=0.5, anchor='center', rely=0.25)
+            statuslbl = CTkLabel(window, text='Готов к работе', font=('Arial Black', 13), bg_color='#2B2B2B', wraplength=350)
+            statuslbl.place(relx=0.5, anchor='center', rely=0.25)
+            stresser.statuslbl = statuslbl
             
             CTkLabel(window, text='Github @Sonys9 | tt @взломщик | tg @freedomleaker2', 
                     font=('Arial Black', 8), bg_color='#2B2B2B').place(x=screen_width//2-120, y=screen_height-20)
@@ -317,22 +311,25 @@ def main():
         
         def start_eat_ctkinter():
             if stresser.eat:
-                startbtn.configure(text='Начать')
-                stresser.statuslbl.configure(text='Тут будет статус')
+                startbtn.configure(text='Есть трафик')
+                stresser.statuslbl.configure(text='Готов к работе')
                 stresser.eat = False
             else:
                 startbtn.configure(text='Остановить')
+                stresser.statuslbl.configure(text='Тестируем сервера...')
                 stresser.eat = True
-                stresser.traffic_down()
+                threading.Thread(target=stresser.traffic_down, daemon=True).start()
         
         def start_kill_ctkinter():
             if stresser.killwifi:
-                killwifibtn.configure(text='Начать')
+                killwifibtn.configure(text='Убить интернет')
+                stresser.statuslbl.configure(text='Готов к работе')
                 stresser.killwifi = False
             else:
                 killwifibtn.configure(text='Остановить')
+                stresser.statuslbl.configure(text='Сканируем сеть...')
                 stresser.killwifi = True
-                stresser.kill_wifi()
+                threading.Thread(target=stresser.kill_wifi, daemon=True).start()
         
         window.after(200, add_widgets)
         window.mainloop()
