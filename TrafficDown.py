@@ -297,14 +297,19 @@ def main():
             statuslbl.place(relx=0.5, anchor='center', rely=0.25)
             stresser.statuslbl = statuslbl
             
+            # Основные кредиты
             CTkLabel(window, text='Github @Sonys9 | tt @взломщик | tg @freedomleaker2', 
-                    font=('Arial Black', 8), bg_color='#2B2B2B').place(relx=0.5, anchor='center', rely=0.85)
+                    font=('Arial Black', 8), bg_color='#2B2B2B').place(x=screen_width//2-120, y=screen_height-40)
             
-            CTkLabel(window, text='Многопоточность: gh @cryptexctl | tg @systemxpore', 
-                    font=('Arial Black', 8), bg_color='#2B2B2B').place(relx=0.5, anchor='center', rely=0.90)
+            # Отдельная серая часть для дополнительных кредитов
+            credits_frame = CTkFrame(window, width=screen_width-20, height=60, bg_color='#1A1A1A')
+            credits_frame.place(x=10, y=screen_height-70)
             
-            CTkLabel(window, text='Server system rework: gh @cryptexctl | tg @systemxpore', 
-                    font=('Arial Black', 8), bg_color='#2B2B2B').place(relx=0.5, anchor='center', rely=0.95)
+            CTkLabel(credits_frame, text='Многопоточность: gh @cryptexctl | tg @systemxpore', 
+                    font=('Arial Black', 8), bg_color='#1A1A1A').place(relx=0.5, anchor='center', rely=0.3)
+            
+            CTkLabel(credits_frame, text='Server system rework: gh @cryptexctl | tg @systemxpore', 
+                    font=('Arial Black', 8), bg_color='#1A1A1A').place(relx=0.5, anchor='center', rely=0.7)
             
             startbtn = CTkButton(window, text='Есть трафик', command=start_eat_ctkinter, 
                                fg_color='#008E63', bg_color='#2B2B2B', hover_color='#225244')
