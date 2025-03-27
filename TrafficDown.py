@@ -297,19 +297,31 @@ def main():
             statuslbl.place(relx=0.5, anchor='center', rely=0.25)
             stresser.statuslbl = statuslbl
             
-            # Основные кредиты
-            CTkLabel(window, text='Github @Sonys9 | tt @взломщик | tg @freedomleaker2', 
-                    font=('Arial Black', 8), bg_color='#2B2B2B').place(x=screen_width//2-120, y=screen_height-40)
+            def show_credits():
+                credits_window = CTk()
+                credits_window.title('Credits')
+                credits_window.geometry('300x200')
+                credits_window.resizable(False, False)
+                
+                CTkLabel(credits_window, text='TrafficDown Credits', 
+                        font=('Arial Black', 16), bg_color='#2B2B2B').pack(pady=10)
+                
+                CTkLabel(credits_window, text='Main Developer:', 
+                        font=('Arial Black', 12), bg_color='#2B2B2B').pack(pady=5)
+                CTkLabel(credits_window, text='Github @Sonys9\nTikTok @взломщик\nTelegram @freedomleaker2', 
+                        font=('Arial Black', 10), bg_color='#2B2B2B').pack()
+                
+                CTkLabel(credits_window, text='\nMulti-threading & Server System:', 
+                        font=('Arial Black', 12), bg_color='#2B2B2B').pack(pady=5)
+                CTkLabel(credits_window, text='Github @cryptexctl\nTelegram @systemxpore', 
+                        font=('Arial Black', 10), bg_color='#2B2B2B').pack()
+                
+                credits_window.mainloop()
             
-            # Отдельная серая часть для дополнительных кредитов
-            credits_frame = CTkFrame(window, width=screen_width-20, height=60, bg_color='#1A1A1A')
-            credits_frame.place(x=10, y=screen_height-70)
-            
-            CTkLabel(credits_frame, text='Многопоточность: gh @cryptexctl | tg @systemxpore', 
-                    font=('Arial Black', 8), bg_color='#1A1A1A').place(relx=0.5, anchor='center', rely=0.3)
-            
-            CTkLabel(credits_frame, text='Server system rework: gh @cryptexctl | tg @systemxpore', 
-                    font=('Arial Black', 8), bg_color='#1A1A1A').place(relx=0.5, anchor='center', rely=0.7)
+            credits_btn = CTkButton(window, text='Credits', command=show_credits,
+                                  fg_color='#1A1A1A', bg_color='#2B2B2B', hover_color='#333333',
+                                  width=80, height=25)
+            credits_btn.place(x=screen_width-100, y=screen_height-40)
             
             startbtn = CTkButton(window, text='Есть трафик', command=start_eat_ctkinter, 
                                fg_color='#008E63', bg_color='#2B2B2B', hover_color='#225244')
