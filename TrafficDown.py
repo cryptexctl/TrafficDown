@@ -300,8 +300,11 @@ def main():
             CTkLabel(window, text='Github @Sonys9 | tt @взломщик | tg @freedomleaker2', 
                     font=('Arial Black', 8), bg_color='#2B2B2B').place(x=screen_width//2-120, y=screen_height-30)
             
-            CTkLabel(window, text='Многопоточность и переработанная система серверов: Github @cryptexctl | tg @systemxpore', 
+            CTkLabel(window, text='Многопоточность: Github @cryptexctl | tg @systemxpore', 
                     font=('Arial Black', 8), bg_color='#2B2B2B').place(x=screen_width//2-120, y=screen_height-20)
+            
+            CTkLabel(window, text='Переработанная система серверов: Github @cryptexctl | tg @systemxpore', 
+                    font=('Arial Black', 8), bg_color='#2B2B2B').place(x=screen_width//2-120, y=screen_height-10)
             
             startbtn = CTkButton(window, text='Есть трафик', command=start_eat_ctkinter, 
                                fg_color='#008E63', bg_color='#2B2B2B', hover_color='#225244')
