@@ -55,6 +55,15 @@ SPEED_TEST_SERVERS = {
 #            'http://speed.cloudflare.com/10mb.bin',
             'http://speed.cloudflare.com/100mb.bin'
         ]
+    },
+    'iwakurahome': {
+        'name': 'Lain Looking Glass',
+        'description': 'Тестовые файлы от Google',
+        'urls': [
+            'http://lg.iwakurahome.ru/files/file_100MB.bin',
+            'http://lg.iwakurahome.ru/files/file_1GB.bin',
+            'http://lg.iwakurahome.ru/files/file_10GB.bin'
+        ]
     }
 }
 
