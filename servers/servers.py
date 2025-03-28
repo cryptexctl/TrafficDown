@@ -58,7 +58,7 @@ SPEED_TEST_SERVERS = {
     },
     'iwakurahome': {
         'name': 'Lain Looking Glass',
-        'description': 'Тестовые файлы от Google',
+        'description': 'Тестовые файлы от меня',
         'urls': [
             'http://lg.iwakurahome.ru/files/file_100MB.bin',
             'http://lg.iwakurahome.ru/files/file_1GB.bin',
